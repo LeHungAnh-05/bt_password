@@ -10,29 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="12dp"
         android:gravity="center_horizontal">
 
         <!-- Logo -->
         <ImageView
             android:layout_width="120dp"
-            android:layout_height="80dp"
+            android:layout_height="120dp"
             android:src="@drawable/logo"
-            android:layout_marginBottom="16dp" />
+            android:contentDescription="Logo" />
 
-        <!-- App name -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="SmartTasks"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginBottom="8dp" />
+            android:gravity="center"
+            android:textColor="#2196F3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Check your email"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -49,7 +51,6 @@
             android:gravity="center"
             android:layout_marginBottom="24dp" />
 
-        <!-- OTP fields -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +62,7 @@
                 android:id="@+id/otp1"
                 style="@style/otpBoxStyle"
                 android:layout_marginEnd="18dp"
-                android:maxLength="1"/>
+                android:maxLength="1" />
 
             <EditText
                 android:id="@+id/otp2"
@@ -83,29 +84,29 @@
             <EditText
                 android:id="@+id/otp5"
                 style="@style/otpBoxStyle"
-                android:layout_marginEnd="18dp"
                 android:maxLength="1" />
         </LinearLayout>
 
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_marginBottom="8dp"
             android:textColor="#FF0000"
             android:textSize="14sp"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnContinue"
             android:text="Continue"
+            android:background="@drawable/btn_bg"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:backgroundTint="#007BFF"
+            android:layout_marginBottom="16dp"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvResend"

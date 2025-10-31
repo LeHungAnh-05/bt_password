@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:src="@drawable/ic_person"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Avatar"
+            android:background="@android:color/darker_gray"
+            android:scaleType="centerCrop"
+            android:padding="8dp"/>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Profile"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#2196F3"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:text="Name"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="329dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_border"
+            android:hint="Name" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:text="Email"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="328dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_border"
+            android:enabled="false"
+            android:hint="Email" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:text="Date of Birth"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/edtDob"
+            android:layout_width="325dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_border"
+            android:clickable="true"
+            android:drawableEnd="@android:drawable/ic_menu_my_calendar"
+            android:focusable="false"
+            android:hint="Date of Birth" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="212dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btn_bg"
+            android:text="Back"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>
