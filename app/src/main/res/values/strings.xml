@@ -2,6 +2,8 @@
     <string name="app_name">bt_password</string>
 
     <string name="default_web_client_id" translatable="false">261794956217-mtts4cpohaf0rfkq86528sm084n5ed1c.apps.googleusercontent.com</string>
-
+    <string name="add_task">Add Task</string>
+    <string name="attachment">Attachment</string>
+    <string name="notifications">Notifications</string>
 </resources>
     

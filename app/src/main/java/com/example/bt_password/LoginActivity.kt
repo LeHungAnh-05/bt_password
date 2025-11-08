@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bt_password.databinding.ActivityLoginBinding
+import com.example.bt_password.ui.lists.TaskListActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         auth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -35,18 +35,15 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-
         binding.btnGoogleSignIn.setOnClickListener {
             signInWithGoogle()
         }
     }
 
-
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
         launcher.launch(signInIntent)
     }
-
 
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -62,21 +59,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Xác thực Firebase với tài khoản Google
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
                     Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
-                    
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    intent.putExtra("name", user?.displayName)
-                    intent.putExtra("email", user?.email)
-                    intent.putExtra("photo", user?.photoUrl.toString())
+
+                    // ✅ Sau khi đăng nhập thành công → mở màn hình TaskListActivity
+                    val intent = Intent(this, TaskListActivity::class.java)
                     startActivity(intent)
                     finish()
+
                 } else {
                     Toast.makeText(this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show()
                     Log.e("LoginActivity", "Firebase login failed", task.exception)
@@ -86,13 +80,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        // Nếu người dùng đã đăng nhập rồi → chuyển luôn sang Profile
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra("name", currentUser.displayName)
-            intent.putExtra("email", currentUser.email)
-            intent.putExtra("photo", currentUser.photoUrl.toString())
+            val intent = Intent(this, TaskListActivity::class.java)
             startActivity(intent)
             finish()
         }
