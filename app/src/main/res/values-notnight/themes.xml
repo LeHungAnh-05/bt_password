@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 🌞 Light Theme -->
+    <style name="Theme.Bt_password" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Màu chính -->
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Màu nền -->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+
+        <!-- Màu văn bản -->
+        <item name="android:textColor">@color/black</item>
+
+        <!-- Nút, AppBar... -->
+        <item name="colorSecondary">@color/teal_700</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+    </style>
+</resources>

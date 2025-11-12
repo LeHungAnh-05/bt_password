@@ -4,7 +4,7 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9F9F9">
+    android:background="?attr/colorSurface">
 
     <!-- 🔹 TOP BAR -->
     <LinearLayout
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:background="@color/white"
+        android:background="?attr/colorSurfaceContainer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="26sp"
-                android:textColor="#2196F3"/>
+                android:textColor="?attr/colorPrimary"/>
 
             <TextView
                 android:id="@+id/tvAppSubtitle"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:textColor="#2196F3" />
+                android:textColor="?attr/colorPrimary" />
         </LinearLayout>
 
         <ImageView
@@ -61,23 +61,21 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/ic_notification"
-            app:tint="#000000"
+            app:tint="?attr/colorOnSurface"
             android:contentDescription="@string/notifications" />
     </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTasks"
-        android:layout_width="414dp"
-        android:layout_height="571dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:clipToPadding="false"
         android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/topBar" />
 
     <include
         android:id="@+id/emptyView"
@@ -93,9 +91,9 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        android:background="?attr/colorSurfaceContainer"
+        app:itemIconTint="?attr/colorOnSurface"
+        app:itemTextColor="?attr/colorOnSurface"
         app:menu="@menu/bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,14 +107,14 @@
         android:layout_margin="16dp"
         android:layout_marginBottom="48dp"
         android:contentDescription="@string/add_task"
+        app:backgroundTint="?attr/colorPrimaryContainer"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/topBar"
-        app:layout_constraintVertical_bias="0.923"
+        app:layout_constraintVertical_bias="0.964"
         app:srcCompat="@drawable/ic_add"
-        app:tint="@android:color/white" />
-
+        app:tint="?attr/colorOnPrimaryContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

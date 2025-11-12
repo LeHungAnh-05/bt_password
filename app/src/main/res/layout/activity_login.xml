@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="@android:color/white"
+    android:background="?attr/colorSurface"
     tools:context=".LoginActivity">
 
     <!-- Logo UTH -->
@@ -25,7 +25,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="#2196F3"
+        android:textColor="?attr/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A simple and efficient to-do app"
-        android:textColor="#2196F3"
+        android:textColor="?attr/colorPrimary"
         android:textSize="14sp"
         android:layout_marginBottom="40dp" />
 
@@ -45,7 +45,7 @@
         android:text="Welcome"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnSurface"
         android:layout_marginBottom="8dp" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Ready to explore? Log in to get started."
         android:textSize="14sp"
-        android:textColor="#777777"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:layout_marginBottom="32dp" />
 
     <com.google.android.gms.common.SignInButton

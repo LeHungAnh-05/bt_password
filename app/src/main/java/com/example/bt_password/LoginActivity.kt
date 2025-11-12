@@ -78,13 +78,13 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val intent = Intent(this, TaskListActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        val currentUser = auth.currentUser
+//        if (currentUser != null) {
+//            val intent = Intent(this, TaskListActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//    }
 }

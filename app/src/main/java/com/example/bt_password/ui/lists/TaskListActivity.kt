@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bt_password.R
@@ -13,6 +14,11 @@ import com.example.bt_password.data.api.RetrofitClient
 import com.example.bt_password.data.model.ApiResponse
 import com.example.bt_password.data.model.Task
 import com.example.bt_password.ui.detail.TaskDetailActivity
+import com.example.bt_password.ui.settings.SettingActivity
+import com.example.bt_password.ProfileActivity
+import android.widget.ImageView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +29,9 @@ class TaskListActivity : AppCompatActivity() {
     private lateinit var emptyView: View
     private lateinit var adapter: TaskAdapter
 
+    private lateinit var logoImage: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
 
@@ -34,7 +42,6 @@ class TaskListActivity : AppCompatActivity() {
         // Cấu hình RecyclerView
         rvTasks.layoutManager = LinearLayoutManager(this)
         adapter = TaskAdapter(emptyList()) { task ->
-            // Khi click vào 1 Task → mở chi tiết
             val intent = Intent(this, TaskDetailActivity::class.java)
             intent.putExtra("TASK_ID", task.id)
             startActivity(intent)
@@ -43,7 +50,34 @@ class TaskListActivity : AppCompatActivity() {
 
         // Gọi API
         loadTasks()
+
+        // Cấu hình bottom navigation
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    Toast.makeText(this, "Trang chủ", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.nav_tasks -> {
+                    Toast.makeText(this, "Danh sách công việc", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.nav_settings -> {
+                    val intent = Intent(this, SettingActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_profile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
+
 
     private fun loadTasks() {
         Log.d("TaskListActivity", "🔄 Bắt đầu tải danh sách task...")

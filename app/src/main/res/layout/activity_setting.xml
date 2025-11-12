@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="?android:colorBackground"
+    tools:context=".ui.settings.SettingActivity">
+
+    <!-- 🔹 Tiêu đề -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:textColor="?android:textColorPrimary"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 🔹 Mô tả -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose your preferred theme mode:"
+        android:textSize="16sp"
+        android:textColor="?android:textColorSecondary"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 🔹 Nhóm chọn theme -->
+    <RadioGroup
+        android:id="@+id/themeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rbLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light"
+            android:checked="true"
+            android:textSize="18sp"
+            android:padding="8dp" />
+
+        <RadioButton
+            android:id="@+id/rbDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark"
+            android:textSize="18sp"
+            android:padding="8dp" />
+    </RadioGroup>
+
+    <!-- 🔹 Nút Apply -->
+    <Button
+        android:id="@+id/btnApply"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Apply"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/teal_700" />
+
+</LinearLayout>

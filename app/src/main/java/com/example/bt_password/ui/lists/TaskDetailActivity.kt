@@ -32,7 +32,7 @@ class TaskDetailActivity : AppCompatActivity() {
     private lateinit var subtaskAdapter: SubtaskAdapter
     private lateinit var attachmentAdapter: AttachmentAdapter
 
-    private var taskId: Int = -1
+    private var taskId: Int = -1 // 👈 giữ kiểu Int nhất quán
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +51,17 @@ class TaskDetailActivity : AppCompatActivity() {
         btnDelete = findViewById(R.id.btnDelete)
         progressBar = findViewById(R.id.progressBar)
 
-        // Lấy Task ID từ Intent
+        // ✅ Lấy Task ID từ Intent (Int)
         taskId = intent.getIntExtra("TASK_ID", -1)
-        Log.d("TaskDetail", "Task ID nhận được: $taskId")
+        Log.d("TaskDetailActivity", "📦 Nhận TASK_ID từ intent: $taskId")
+
         if (taskId == -1) {
             Toast.makeText(this, "Không tìm thấy Task ID!", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // Cấu hình RecyclerView
+        // Cấu hình RecyclerView phụ
         rvSubtasks.layoutManager = LinearLayoutManager(this)
         rvAttachments.layoutManager = LinearLayoutManager(this)
         subtaskAdapter = SubtaskAdapter(emptyList())
@@ -70,96 +71,101 @@ class TaskDetailActivity : AppCompatActivity() {
 
         // Sự kiện
         btnBack.setOnClickListener { finish() }
-        btnDelete.setOnClickListener { deleteTask() }
+        btnDelete.setOnClickListener { deleteTask(taskId) }
 
-        // Tải dữ liệu chi tiết
-        loadTaskDetail()
+        // Tải chi tiết
+        loadTaskDetail(taskId)
     }
 
-    private fun loadTaskDetail() {
-        progressBar.visibility = View.VISIBLE
-        RetrofitClient.instance.getTaskById(taskId)
-            .enqueue(object : Callback<ApiResponse<Task>> {
-                override fun onResponse(
-                    call: Call<ApiResponse<Task>>,
-                    response: Response<ApiResponse<Task>>
-                ) {
-                    progressBar.visibility = View.GONE
-                    if (response.isSuccessful) {
-                        val body = response.body()
-                        val task = body?.data
-                        if (task != null) {
-                            updateUI(task)
-                        } else {
-                            Toast.makeText(
-                                this@TaskDetailActivity,
-                                "Không có dữ liệu task!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } else {
-                        Toast.makeText(
-                            this@TaskDetailActivity,
-                            "Lỗi tải dữ liệu!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<ApiResponse<Task>>, t: Throwable) {
-                    progressBar.visibility = View.GONE
-                    Log.e("TaskDetail", "❌ Lỗi API: ${t.message}")
-                    Toast.makeText(this@TaskDetailActivity, "Lỗi: ${t.message}", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            })
-    }
-
+    // ✅ Hiển thị dữ liệu chi tiết task
     private fun updateUI(task: Task) {
-        tvDetailTitle.text = task.title
-        tvDetailDesc.text = task.description
+        tvDetailTitle.text = task.title ?: "No title"
+        tvDetailDesc.text = if (task.description.isNullOrEmpty()) "No description" else task.description
         tvDetailCategory.text = task.category ?: "N/A"
-        tvDetailStatus.text = task.status
+        tvDetailStatus.text = task.status ?: "N/A"
         tvDetailPriority.text = task.priority ?: "N/A"
         tvDetailDue.text = "Due: ${task.dueDate ?: "Không rõ"}"
 
-        // Cập nhật subtasks & attachments
-        subtaskAdapter.updateData(task.subtasks ?: emptyList())
-        attachmentAdapter.updateData(task.attachments ?: emptyList())
+        Log.d("TaskDetailActivity", """
+            ✅ Hiển thị Task:
+            - ID: ${task.id}
+            - Title: ${task.title}
+            - Description: ${task.description}
+            - Status: ${task.status}
+            - Category: ${task.category}
+            - Priority: ${task.priority}
+            - Due: ${task.dueDate}
+        """.trimIndent())
     }
 
-    private fun deleteTask() {
+    // ✅ Lấy chi tiết task từ danh sách chung
+    private fun loadTaskDetail(id: Int) {
+        Log.d("TaskDetailActivity", "🔄 Bắt đầu tải chi tiết task ID=$id ...")
         progressBar.visibility = View.VISIBLE
-        RetrofitClient.instance.deleteTask(taskId)
+
+        RetrofitClient.instance.getTasks().enqueue(object : Callback<ApiResponse<List<Task>>> {
+            override fun onResponse(
+                call: Call<ApiResponse<List<Task>>>,
+                response: Response<ApiResponse<List<Task>>>
+            ) {
+                progressBar.visibility = View.GONE
+                Log.d("TaskDetailActivity", "📥 API trả về mã ${response.code()}")
+
+                if (response.isSuccessful) {
+                    val apiResponse = response.body()
+                    Log.d("TaskDetailActivity", "🌐 Dữ liệu trả về: $apiResponse")
+
+                    val tasks = apiResponse?.data ?: emptyList()
+                    Log.d("TaskDetailActivity", "📋 Tổng số task: ${tasks.size}")
+
+                    val found = tasks.find { it.id == id }
+
+                    if (found != null) {
+                        updateUI(found)
+                    } else {
+                        Log.w("TaskDetailActivity", "⚠️ Không tìm thấy task ID=$id trong danh sách")
+                        Toast.makeText(this@TaskDetailActivity, "Không tìm thấy task!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Log.e("TaskDetailActivity", "❌ Lỗi phản hồi API: ${response.errorBody()?.string()}")
+                    Toast.makeText(this@TaskDetailActivity, "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse<List<Task>>>, t: Throwable) {
+                progressBar.visibility = View.GONE
+                Log.e("TaskDetailActivity", "❌ Lỗi kết nối: ${t.message}")
+                Toast.makeText(this@TaskDetailActivity, "Không thể tải dữ liệu: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    // ✅ Xóa task (giả lập vì amock không thật sự xóa)
+    private fun deleteTask(id: Int) {
+        Log.d("TaskDetailActivity", "🗑️ Yêu cầu xóa Task ID=$id ...")
+        progressBar.visibility = View.VISIBLE
+
+        RetrofitClient.instance.deleteTask(id)
             .enqueue(object : Callback<ApiResponse<Void>> {
                 override fun onResponse(
                     call: Call<ApiResponse<Void>>,
                     response: Response<ApiResponse<Void>>
                 ) {
                     progressBar.visibility = View.GONE
+                    Log.d("TaskDetailActivity", "📥 Kết quả xóa: ${response.code()}")
+
                     if (response.isSuccessful) {
-                        Toast.makeText(
-                            this@TaskDetailActivity,
-                            "Xóa thành công!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@TaskDetailActivity, "Xóa thành công (mock)!", Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
-                        Toast.makeText(
-                            this@TaskDetailActivity,
-                            "Không thể xóa!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@TaskDetailActivity, "Không thể xóa (mock API)!", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<ApiResponse<Void>>, t: Throwable) {
                     progressBar.visibility = View.GONE
-                    Toast.makeText(
-                        this@TaskDetailActivity,
-                        "Lỗi: ${t.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Log.e("TaskDetailActivity", "❌ Lỗi xóa: ${t.message}")
+                    Toast.makeText(this@TaskDetailActivity, "Lỗi: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
     }

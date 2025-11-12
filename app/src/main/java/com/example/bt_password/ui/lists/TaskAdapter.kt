@@ -18,7 +18,7 @@ class TaskAdapter(
     private val onItemClick: (Task) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    // 🎨 Danh sách màu nền nhẹ nhàng, ngẫu nhiên
+
     private val colors = listOf(
         "#FFEBEE", "#F3E5F5", "#E8EAF6", "#E3F2FD",
         "#E0F7FA", "#E0F2F1", "#F1F8E9", "#FFFDE7",
@@ -50,30 +50,33 @@ class TaskAdapter(
     }
 
     override fun getItemCount(): Int = tasks.size
+    fun updateTasks(newTasks: List<Task>) {
+        tasks = newTasks
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = tasks[position]
 
-        // Gán dữ liệu
+        // Gán dữ liệu (giữ nguyên)
         holder.tvTitle.text = task.title
         holder.tvContent.text = if (task.description.isNotEmpty()) task.description else "No description"
         holder.tvStatus.text = task.status.replaceFirstChar { it.uppercase() }
-
-        // Hiển thị dueDate từ API
         val dueDate = if (!task.dueDate.isNullOrEmpty()) task.dueDate else "No due date"
         holder.tvTime.text = dueDate
-
-        // Đánh dấu checkbox nếu đã hoàn thành
         holder.chkDone.isChecked = task.status.equals("completed", true)
 
-        // Bo góc mềm cho mỗi task item
+        // ✅ GIẢI PHÁP: CHỌN MÀU DỰA TRÊN VỊ TRÍ (POSITION)
+        // Điều này đảm bảo mỗi item sẽ luôn có màu nhất quán khi cuộn
+        val colorIndex = position % colors.size
+        val color = Color.parseColor(colors[colorIndex])
+
         val bg = GradientDrawable()
-        bg.cornerRadius = 36f // 👈 Bo góc nhẹ
-        val color = Color.parseColor(colors[Random.nextInt(colors.size)])
+        bg.cornerRadius = 36f
         bg.setColor(color)
         holder.root.background = bg
 
-        // Màu chữ cho trạng thái
+        // Màu chữ cho trạng thái (giữ nguyên)
         val statusColor = when (task.status.lowercase()) {
             "completed" -> ContextCompat.getColor(holder.itemView.context, R.color.teal_700)
             "pending" -> ContextCompat.getColor(holder.itemView.context, R.color.orange)
@@ -82,8 +85,4 @@ class TaskAdapter(
         holder.tvStatus.setTextColor(statusColor)
     }
 
-    fun updateTasks(newTasks: List<Task>) {
-        tasks = newTasks
-        notifyDataSetChanged()
-    }
 }

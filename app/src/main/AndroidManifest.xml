@@ -1,42 +1,43 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bt_password">
 
-    <!-- Cho phép app truy cập Internet để gọi API -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.Bt_password"> <!-- 💡 Khuyến nghị: Dùng theme của app -->
 
-        <!-- ✅ Màn hình đăng nhập khởi động đầu tiên -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <!-- Màn hình đăng nhập khởi động đầu tiên -->
+    <activity
+        android:name=".LoginActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
-        <!-- Các màn hình khác -->
-        <activity android:name=".ProfileActivity" android:exported="false" />
-        <activity android:name=".ForgetPasswordActivity" android:exported="false" />
-        <activity android:name=".VerifyCodeActivity" android:exported="false" />
-        <activity android:name=".ResetPasswordActivity" android:exported="false" />
-        <activity android:name=".ConfirmActivity" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="false" />
+    <!-- Các màn hình khác -->
+    <activity android:name=".ProfileActivity" android:exported="false" />
+    <activity android:name=".ForgetPasswordActivity" android:exported="false" />
+    <activity android:name=".VerifyCodeActivity" android:exported="false" />
+    <activity android:name=".ResetPasswordActivity" android:exported="false" />
+    <activity android:name=".ConfirmActivity" android:exported="false" />
+    <activity android:name=".MainActivity" android:exported="false" />
+    <activity
+        android:name=".ui.settings.SettingActivity"
+        android:exported="false"/> <!-- Khai báo exported rõ ràng -->
 
-        <!-- ✅ Màn hình danh sách Task -->
-        <activity
-            android:name=".ui.lists.TaskListActivity"
-            android:exported="false" />
+    <activity
+        android:name=".ui.lists.TaskListActivity"
+        android:exported="false" />
 
-        <!-- ✅ Màn hình chi tiết Task -->
-        <activity
-            android:name=".ui.detail.TaskDetailActivity"
-            android:exported="false" />
+    <activity
+        android:name=".ui.detail.TaskDetailActivity"
+        android:exported="false" />
 
-    </application>
-</manifest>
+</application>
+    </manifest>
